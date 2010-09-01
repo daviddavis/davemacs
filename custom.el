@@ -20,7 +20,6 @@
  '(ido-auto-merge-delay-time 60)
  '(ido-enable-flex-matching t)
  '(ido-mode (quote both) nil (ido))
- '(ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
  '(imenu-max-item-length 120)
  '(init-face-from-resources nil)
  '(load-home-init-file t t)
