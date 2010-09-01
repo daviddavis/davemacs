@@ -1,30 +1,31 @@
-;;; Loading Function =================================================
-(defvar ini-loaded ()
-  "List of files loaded during initialization.")
+(defun ini-mtime (filename)
+  "Return the mtime of the specified filename, following symlinks as appropriate"
+  (let* ((attributes (file-attributes filename))
+         (mtime (nth 5 attributes))
+         (symlink-dest (nth 0 attributes)))
+    (if symlink-dest
+        (ini-mtime (concat (file-name-directory filename) symlink-dest))
+      (+ (* (car mtime) 65536) (cadr mtime)))))
 
-(defvar ini-not-loaded ()
-  "List of files that failed to load during initialization.")
+(defun ini-pick-latest-version (filename)
+  "Given a .el file, compare the mtime of the corresponding .elc file, following symlinks to get the mtime
 
-(defun ini-try-load (inifn ext)
-  "Attempt to load an ini-type elisp file."
-  (let ((fn (concat ini-directory "/" inifn ext)))
-    (if (file-readable-p fn)
-        (progn
-          (message (concat "Loading " inifn))
-          (load-file fn)
-          (setq ini-loaded (cons inifn ini-loaded)) ))))
+   If the .elc file is out-dated, delete it"
+  (let ((elc-filename (concat filename "c")))
+    (if (file-readable-p elc-filename)
+        (if (> (ini-mtime filename) (ini-mtime elc-filename))
+            (progn (message "Detected that %S is newer than %S. Deleting %S" filename elc-filename elc-filename)
+                   (delete-file elc-filename)
+                   filename)
+          elc-filename)
+      filename)))
 
-(defun ini-load (inifn)
-  "Load a ini-type elisp file"
-  (cond ((ini-try-load inifn ".elc"))
-        ((ini-try-load inifn ".el"))
-        (t (setq ini-not-loaded (cons inifn ini-not-loaded))
-           (message (concat inifn " not found")))))
+(defun ini-load (filename)
+  (load-file (ini-pick-latest-version filename)))
 
-;;; Now load all the ini-xxx files in the initialization directory
-(let* ((ini-directory (concat dotfiles-dir "initializers.enabled"))
+;;; load all the files in the initializers.enabled/ directory
+(let* ((ini-directory (concat dotfiles-dir "initializers.enabled/"))
        (files (sort (directory-files ini-directory nil "^.*\\.el$") 'string<)))
-  (while (not (null files))
-    (ini-load (substring (car files) 0 -3))
-    (setq files (cdr files)) ))
+  (dolist (file files)
+    (ini-load (concat ini-directory file))))
 
