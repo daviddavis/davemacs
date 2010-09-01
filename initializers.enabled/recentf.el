@@ -1,0 +1,1 @@
+../initializers.available/recentf.el
