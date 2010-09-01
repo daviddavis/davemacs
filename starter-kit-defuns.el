@@ -75,7 +75,8 @@ Symbols matching the text at point are put first in the completion list."
 
 (defun local-comment-auto-fill ()
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
-  (auto-fill-mode t))
+  ;;(auto-fill-mode t)
+  )
 
 (defun turn-on-hl-line-mode ()
   (if window-system (hl-line-mode t)))
@@ -103,7 +104,7 @@ Symbols matching the text at point are put first in the completion list."
 (add-hook 'coding-hook 'turn-on-save-place-mode)
 (add-hook 'coding-hook 'pretty-lambdas)
 (add-hook 'coding-hook 'add-watchwords)
-(add-hook 'coding-hook 'idle-highlight)
+;; (add-hook 'coding-hook 'idle-highlight)
   
 (defun run-coding-hook ()
   "Enable things that are convenient across all coding buffers."
