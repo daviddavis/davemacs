@@ -1,0 +1,24 @@
+[submodule "vendor/cucumber"]
+	path = vendor/cucumber
+	url = git://github.com/michaelklishin/cucumber.el.git
+[submodule "vendor/inf-ruby-bond"]
+	path = vendor/inf-ruby-bond
+	url = http://github.com/pd/inf-ruby-bond.git
+[submodule "vendor/rspec-mode"]
+	path = vendor/rspec-mode
+	url = git://github.com/timcharper/rspec-mode.git
+[submodule "vendor/rvm"]
+	path = vendor/rvm
+	url = http://github.com/senny/rvm.el.git
+[submodule "vendor/textmate"]
+	path = vendor/textmate
+	url = git://github.com/timcharper/textmate.el.git
+[submodule "vendor/vimpulse"]
+	path = vendor/vimpulse
+	url = git://github.com/timcharper/vimpulse.git
+[submodule "vendor/vimpulse-surround"]
+	path = vendor/vimpulse-surround
+	url = git://github.com/timcharper/vimpulse-surround.el.git
+[submodule "vendor/yaml-mode"]
+	path = vendor/yaml-mode
+	url = git://github.com/yoshiki/yaml-mode.git
