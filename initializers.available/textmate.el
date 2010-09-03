@@ -42,18 +42,29 @@
 
 ;;; Sane search functionality
 ;; It makes no sense to me whatsoever why the current say search behaves is desirable (s-e appending on to the end of the current search string is just useless... I know there's gotta be a reason for it... but why?)
+(defvar query-replace-defaults '("" . ""))
 
 (defun isearch-string-save (&optional p1 p2)
   "Copy the current selection to the search buffer"
   (interactive "*r")
-  (setq isearch-string  (buffer-substring p1 p2)
-        isearch-message (mapconcat 'isearch-text-char-description isearch-string ""))
+  (setq text (buffer-substring p1 p2)
+        isearch-string  (regexp-quote text)
+        isearch-message (mapconcat 'isearch-text-char-description isearch-string "")
+        query-replace-defaults (cons text (cdr query-replace-defaults)))
+  (setq mark-active nil))
+
+(defun replace-string-save (&optional p1 p2)
+  "Copy the current selection to the search buffer"
+  (interactive "*r")
+  (setq text (buffer-substring p1 p2)
+        query-replace-defaults (cons (car query-replace-defaults) text))
   (setq mark-active nil))
 
 (let ((set-key (lambda (key function) (define-key *textmate-mode-map* key function))))
   (funcall set-key (kbd "<M-s-return>") 'cr-before-line))
 
 (global-set-key (kbd "s-e") 'isearch-string-save)
+(global-set-key (kbd "s-E") 'replace-string-save)
 (global-set-key (kbd "s-g") 'isearch-repeat-forward)
 (global-set-key (kbd "s-G") 'isearch-repeat-backward)
 (global-set-key (kbd "<M-s-return>") 'cr-before-line)
