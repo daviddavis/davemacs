@@ -41,3 +41,48 @@
 (global-set-key (kbd "C-s-0") 'select-outer-paren)
 (global-set-key (kbd "C-s-9") 'shrink-selection)
 
+
+
+(defvar ido-make-buffer-list-hook nil)
+
+(defun textmate-plus-list-project-buffers (&optional project-root)
+  "Project buffers"
+  (interactive)
+  (let* ((project-root (or project-root (textmate-project-root)))
+         (filter-fn (lambda ()
+                      (setq prompt (format "Buffer in project `%s': " (textmate-project-root)))
+                      (setq ido-temp-list (delete-if-not (lambda (buffer)
+                                                           (with-current-buffer buffer
+                                                             (and buffer-file-name
+                                                                  (equal project-root
+                                                                         (textmate-project-root)))))
+                                                         ido-temp-list))))
+         (ido-make-buffer-list-hook (append ido-make-buffer-list-hook (list filter-fn))))
+    (ido-switch-buffer)))
+
+(defun textmate-plus-switch-to-project ()
+  "Switch to project"
+  (interactive)
+  (let* ((projects-alist)
+         (this-buffer (current-buffer))
+         (this-project (textmate-project-root))
+         (buffers (delete-if-not (lambda (buffer) (with-current-buffer buffer
+                                               (and buffer-file-name
+                                                    (textmate-project-root)
+                                                    (not (equal this-buffer buffer))
+                                                    (not (equal this-project (textmate-project-root))))))
+                                 (buffer-list))))
+
+    (dolist (buffer buffers)
+      (let ((project-root (with-current-buffer buffer
+                            (textmate-project-root))))
+        (unless (assoc-default project-root projects-alist)
+          (aput 'projects-alist project-root buffer))))
+
+    (let* ((projects (append (mapcar (lambda (pair) (car pair)) projects-alist) (list this-project)))
+           (project (ido-completing-read "Project: " projects)))
+      (textmate-plus-list-project-buffers project))))
+
+(global-set-key (kbd "<C-s-268632066>") 'textmate-plus-list-project-buffers)
+(global-set-key (kbd "<C-s-268632080>") 'textmate-plus-switch-to-project)
+
