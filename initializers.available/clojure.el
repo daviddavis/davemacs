@@ -11,3 +11,4 @@
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (highlight-parentheses-mode)))
 
+(add-hook 'slime-repl-mode-hook 'clojure-mode-font-lock-setup)
