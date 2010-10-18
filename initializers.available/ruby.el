@@ -5,7 +5,7 @@
 (defcustom rvm-ruby-187-name "ruby-1.8.7-p249"
   "The name of the ruby 1.8.7 interpreter, as shown by `rvm list'")
 
-(defcustom rvm-ruby-192-name "ruby-1.9.2-preview3"
+(defcustom rvm-ruby-192-name "ruby-1.9.2-p0"
   "The name of the ruby 1.9.2 interpreter, as shown by `rvm list'")
 
 
