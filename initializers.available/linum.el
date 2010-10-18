@@ -9,7 +9,8 @@
         clojure-mode
         scheme-mode
         R-mode
-        ruby-mode))
+        ruby-mode
+        feature-mode))
 (dolist (mode linum-modes)
   (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-linum-mode))
 
