@@ -11,6 +11,7 @@
 
 (eval-after-load 'ruby-mode
   '(progn
+     (require 'rvm)
      (require 'rspec-mode)
      (require 'ruby-electric)
 
