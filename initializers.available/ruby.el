@@ -1,8 +1,3 @@
-;; Load rvm
-(load-file "~/.emacs.d/vendor/rvm.el")
-(require 'rvm)
-(rvm-use-default) ;; use rvm's default ruby for the current Emacs session
-
 (defcustom rvm-default-ruby-name "ruby-1.8.7-p249"
   "The name of the ruby interpreter to use on startup, as shown by `rvm list'")
 
