@@ -28,3 +28,6 @@
 [submodule "vendor/rhtml-minor-mode"]
 	path = vendor/rhtml-minor-mode
 	url = git://github.com/eschulte/rhtml.git
+[submodule "vendor/ac-slime"]
+	path = vendor/ac-slime
+	url = https://github.com/purcell/ac-slime.git
