@@ -31,3 +31,6 @@
 [submodule "vendor/ac-slime"]
 	path = vendor/ac-slime
 	url = https://github.com/purcell/ac-slime.git
+[submodule "vendor/rsense"]
+	path = vendor/rsense
+	url = http://github.com/m2ym/rsense.git
