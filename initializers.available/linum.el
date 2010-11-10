@@ -1,5 +1,5 @@
 (require 'linum)
-(setq linum-format "  %d")
+(setq linum-format " %3d")
 (global-set-key (kbd "M-n") 'linum-mode)
 
 ;; install hooks for various langauges to automatically turn on line numbers
@@ -10,6 +10,9 @@
         scheme-mode
         R-mode
         ruby-mode
+        html-mode
+        yaml-mode
+        espresso-mode
         feature-mode))
 (dolist (mode linum-modes)
   (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-linum-mode))
