@@ -71,7 +71,9 @@
 
 (global-set-key (kbd "<s-return>") 'cr-after-line)
 (global-set-key (kbd "C-S-j") 'join-line-textmate-style)
-(global-set-key (kbd "C-S-K") 'kill-whole-lines)
+(global-set-key (kbd "C-S-k") 'kill-whole-lines)
+(global-set-key (kbd "C-S-d") 'duplicate-line-or-selection)
+(global-set-key (kbd "M-s-å") 'append-to-lines) ;; M-s-a
 (global-set-key (kbd "s-B") 'select-outer-paren)
 
 (defun kill-whole-lines (&optional arg)
@@ -81,6 +83,39 @@
       (progn (textmate-select-line)
              (filter-buffer-substring (region-beginning) (region-end) t))
     (kill-whole-line arg)))
+
+(defun duplicate-line-or-selection ()
+  "duplicate the whole line or just the selection"
+  (interactive)
+  (if mark-active
+      (progn (deactivate-mark)
+             (cua-copy-region nil)
+             (cua-paste nil))
+    (progn (kill-whole-line)
+           (cua-paste nil) (cua-paste nil)
+           (previous-line)
+           (end-of-visual-line))))
+
+(defun append-to-lines (text-to-be-inserted)
+  ;;Appends text to each line in region
+  (interactive "sEnter text to append: ")
+  (save-excursion
+    (let (point-ln mark-ln initial-ln final-ln count)
+      (barf-if-buffer-read-only)
+      (setq point-ln (line-number-at-pos))
+      (exchange-point-and-mark)
+      (setq mark-ln (line-number-at-pos))
+      (if (< point-ln mark-ln)
+          (progn (setq initial-ln point-ln final-ln mark-ln)
+                 (exchange-point-and-mark))
+        (setq initial-ln mark-ln final-ln point-ln))
+      (setq count initial-ln)
+      (while (<= count final-ln)
+        (progn (move-end-of-line 1)
+               (insert text-to-be-inserted)
+               (next-line)
+               (setq count (1+ count))))
+      (message "From line %d to line %d." initial-ln final-ln ))))
 
 ;; (defadvice paredit-mode (around paredit-mode-turn-off-meta-up-down)
 ;;   (define-key paredit-mode-map (kbd "M-<down>") nil)
