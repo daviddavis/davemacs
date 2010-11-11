@@ -28,6 +28,7 @@
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
  '(preview-transparent-color "black")
  '(quack-remap-find-file-bindings-p nil)
+ '(rails-indent-and-complete nil)
  '(ruby-electric-expand-delimiters-list (quote (123 91 40 39 34 96)))
  '(safe-local-variable-values (quote ((ack-arguments "--ignore-dir=ruby") (*textmate-gf-exclude* . "/\\.|vendor|ruby/gems|classes|fixtures|tmp|log|build|\\.xcodeproj|\\.nib|\\.framework|\\.app|\\.pbproj|\\.pbxproj|\\.xcode|\\.xcodeproj|\\.bundle|\\.pyc") (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
  '(sentence-end-double-space nil)
