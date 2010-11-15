@@ -6,6 +6,7 @@
  '(LaTeX-command "latex")
  '(ack-project-root-file-patterns (quote (".project\\'" ".xcodeproj\\'" ".sln\\'" "\\`Project.ede\\'" "\\`.git\\'" "\\`.bzr\\'" "\\`_darcs\\'" "\\`.hg\\'" ".dir-locals" ".emacs-project")))
  '(blink-cursor-mode t)
+ '(css-indent-offset 2)
  '(cua-enable-cua-keys nil)
  '(cua-mode t nil (cua-base))
  '(cursor-type 'bar)
