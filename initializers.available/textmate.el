@@ -40,34 +40,53 @@
   (setq mark-active t)
   (setq transient-mark-mode t))
 
-;;; Sane search functionality
-;; It makes no sense to me whatsoever why the current say search behaves is desirable (s-e appending on to the end of the current search string is just useless... I know there's gotta be a reason for it... but why?)
+;;; TextMate search functionality
 (defvar query-replace-defaults '("" . ""))
 
-(defun isearch-string-save (&optional p1 p2)
+(defun textmate-search-string-save (&optional p1 p2)
   "Copy the current selection to the search buffer"
   (interactive "*r")
-  (setq text (buffer-substring p1 p2)
+  (setq text (if mark-active (buffer-substring p1 p2) "")
         isearch-string  (regexp-quote text)
         isearch-message (mapconcat 'isearch-text-char-description isearch-string "")
         query-replace-defaults (cons text (cdr query-replace-defaults)))
   (setq mark-active nil))
 
-(defun replace-string-save (&optional p1 p2)
+(defun textmate-replace-string-save (&optional p1 p2)
   "Copy the current selection to the search buffer"
   (interactive "*r")
-  (setq text (buffer-substring p1 p2)
+  (setq text (if mark-active (buffer-substring p1 p2) "")
         query-replace-defaults (cons (car query-replace-defaults) text))
   (setq mark-active nil))
 
-(let ((set-key (lambda (key function) (define-key *textmate-mode-map* key function))))
-  (funcall set-key (kbd "<M-s-return>") 'cr-before-line))
+(defun textmate-replace-string ()
+  (cdr query-replace-defaults))
 
-(global-set-key (kbd "s-e") 'isearch-string-save)
-(global-set-key (kbd "s-E") 'replace-string-save)
-(global-set-key (kbd "s-g") 'isearch-repeat-forward)
-(global-set-key (kbd "s-G") 'isearch-repeat-backward)
-(global-set-key (kbd "<M-s-return>") 'cr-before-line)
+(defun textmate-replace-last-occurrence ()
+  "Replaces the last occurrence with your default replace string (the one stored by `replace-string-save')"
+  (interactive)
+  (when (and isearch-overlay
+             (equal (overlay-buffer isearch-overlay) (current-buffer))
+             (or (= (point) (overlay-end isearch-overlay))
+                 (= (point) (overlay-start isearch-overlay))))
+    (filter-buffer-substring (overlay-start isearch-overlay)
+                             (overlay-end isearch-overlay)
+                             t)
+    (delete-overlay isearch-overlay)
+    (insert-string (textmate-replace-string))))
+
+(defun textmate-replace-last-occurrence-and-repeat-search-forward ()
+  "Replaces the last occurrence with your default replace string (the one stored by `replace-string-save')"
+  (interactive)
+  (textmate-replace-last-occurrence)
+  (isearch-repeat-forward))
+
+(define-key *textmate-mode-map* (kbd "s-e") 'textmate-search-string-save)
+(define-key *textmate-mode-map* (kbd "s-E") 'textmate-replace-string-save)
+(define-key *textmate-mode-map* (kbd "M-s-ƒ") 'textmate-replace-last-occurrence-and-repeat-search-forward)
+(define-key *textmate-mode-map* (kbd "s-g") 'isearch-repeat-forward)
+(define-key *textmate-mode-map* (kbd "s-G") 'isearch-repeat-backward)
+
 
 (global-set-key (kbd "<s-return>") 'cr-after-line)
 (global-set-key (kbd "C-S-j") 'join-line-textmate-style)
