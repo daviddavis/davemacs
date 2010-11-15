@@ -66,6 +66,11 @@
          (toolbar ((t (nil))))
          (bold ((t (:bold t))))
          (bold-italic ((t (:bold t))))
-         (underline ((nil (:underline nil)))))))))
+         (underline ((nil (:underline nil))))
+
+         ;; magit
+         (magit-item-highlight ((((class color) (background dark)) (:background "#222222"))))
+         (magit-diff-hunk-header ((t (:inherit magit-header :foreground "yellow" :slant italic))))
+         (yas/field-highlight-face ((t (:background "DimGrey")))))))))
 
 (provide 'color-theme-ir-black)
