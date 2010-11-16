@@ -34,3 +34,6 @@
 [submodule "vendor/rsense"]
 	path = vendor/rsense
 	url = http://github.com/m2ym/rsense.git
+[submodule "vendor/github"]
+	path = vendor/github
+	url = git://github.com/leadtune/github.el.git
