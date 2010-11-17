@@ -1,6 +1,6 @@
 [submodule "vendor/cucumber"]
 	path = vendor/cucumber
-	url = git://github.com/michaelklishin/cucumber.el.git
+	url = git://github.com/timcharper/cucumber.el.git
 [submodule "vendor/inf-ruby-bond"]
 	path = vendor/inf-ruby-bond
 	url = http://github.com/pd/inf-ruby-bond.git
