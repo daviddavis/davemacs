@@ -15,9 +15,11 @@
             indent-line-function 'indent-relative)))
   (message "Using %s" indent-line-function))
 
-(global-set-key (kbd "C-c TAB") 'toggle-relative-indent)
-
 (defadvice reindent-then-newline-and-indent (around reindent-then-newline-and-indent-maybe activate)
   (if (equal indent-line-function 'indent-relative)
       (newline-and-indent)
     (progn ad-do-it)))
+
+(global-set-key (kbd "C-c TAB") 'toggle-relative-indent)
+(eval-after-load 'sgml-mode
+  '(define-key sgml-mode-map (kbd "C-c TAB") 'toggle-relative-indent))
