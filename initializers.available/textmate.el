@@ -87,13 +87,19 @@
 (define-key *textmate-mode-map* (kbd "s-g") 'isearch-repeat-forward)
 (define-key *textmate-mode-map* (kbd "s-G") 'isearch-repeat-backward)
 
+(define-key *textmate-mode-map* (kbd "<M-s-return>") 'cr-before-line)
+(define-key *textmate-mode-map* (kbd "<s-return>") 'cr-after-line)
 
-(global-set-key (kbd "<s-return>") 'cr-after-line)
-(global-set-key (kbd "C-S-j") 'join-line-textmate-style)
-(global-set-key (kbd "C-S-k") 'kill-whole-lines)
-(global-set-key (kbd "C-S-d") 'duplicate-line-or-selection)
-(global-set-key (kbd "M-s-å") 'append-to-lines) ;; M-s-a
-(global-set-key (kbd "s-B") 'select-outer-paren)
+(define-key *textmate-mode-map* (kbd "C-S-j") 'join-line-textmate-style)
+
+(define-key *textmate-mode-map* (kbd "C-S-k") 'kill-whole-lines)
+(define-key *textmate-mode-map* (kbd "C-S-d") 'duplicate-line-or-selection)
+(define-key *textmate-mode-map* (kbd "M-s-å") 'append-to-lines) ;; M-s-a
+(define-key *textmate-mode-map* (kbd "s-B") 'select-outer-paren)
+
+;; Alternative column movement commands in case if paredit is stepping on it
+(define-key *textmate-mode-map* (kbd "C-c t k") 'textmate-column-up)
+(define-key *textmate-mode-map* (kbd "C-c t j") 'textmate-column-down)
 
 (defun kill-whole-lines (&optional arg)
   "like kill-whole-line, but kills everything selected"
@@ -152,17 +158,12 @@
 
 ;; (search-forward-regexp "\\(^.\\{0\\}\\([a-zA-Z0-9_].\\|.[^a-zA-Z0-9_]\\)\\|^.\\{0,1\\}$\\)")
 
-(require 'paredit)
-(define-key paredit-mode-map (kbd "M-<down>") nil)
-(define-key paredit-mode-map (kbd "M-<up>") nil)
-
-
-(define-key *textmate-mode-map* (kbd "C-c t k") 'textmate-column-up)
-(define-key *textmate-mode-map* (kbd "C-c t j") 'textmate-column-down)
-
+(eval-after-load 'paredit-mode
+  '(progn
+    (define-key paredit-mode-map (kbd "M-<down>") nil)
+    (define-key paredit-mode-map (kbd "M-<up>") nil)))
 
 ;; (define-key *textmate-mode-map* [(meta <up>)] 'textmate-column-up)
-
 
 (defun textmate-plus-partial-matching-regex (filename)
   (let* ((pieces (split-string (regexp-quote filename) "/"))
