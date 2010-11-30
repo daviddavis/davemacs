@@ -7,7 +7,7 @@
         (*background*   "#000000")
         (*cursor*       "#FFA560")
         (*mouse*        "sienna1")
-        (*region*       "#1D1E2C")
+        (*region*       "#66B5FF")
         (*current-line* "#151515")
         (*string*       "#A8FF60")
         (*keyword*      "#66B5FF")
@@ -56,8 +56,8 @@
          ,(face "variable-name" *variable*)
          ,(face "warning" "white" *red*)
          (gui-element ,(color *background* "#D4D0C8"))
-         (region ,(color nil *region*))
-         (mode-line ,(color *background* "grey75"))
+         (region ,(color "black" *region*))
+         (mode-line ,(color "black" "#FFFF77"))
          (highlight ,(color nil *current-line*))
          (highline-face ,(color nil *current-line*))
          (italic ((t (nil))))
@@ -67,6 +67,7 @@
          (bold ((t (:bold t))))
          (bold-italic ((t (:bold t))))
          (underline ((nil (:underline nil))))
+         (viper-minibuffer-emacs ((((class color)) nil)))
 
          ;; magit
          (magit-item-highlight ((((class color) (background dark)) (:background "#222222"))))
