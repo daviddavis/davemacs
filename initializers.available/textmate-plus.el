@@ -5,8 +5,7 @@
 (defun find-non-escaped-paren (kind direction)
   (cond ((= direction -1) (re-search-backward kind))
         ((= direction 1) (search-forward kind) (backward-char))
-        (else (error "direction must be -1 or 1"))
-        )
+        (else (error "direction must be -1 or 1")))
   (cond ((looking-back "\\\\" 1) (find-non-escaped-paren kind direction))))
 
 (defun select-previous-paren ()
