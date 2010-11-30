@@ -4,7 +4,12 @@
 (menu-bar-mode 1)
 (scroll-bar-mode 1)
 
-(defun maximize-frame () 
+(defun osx-zoom-frame ()
+  (interactive)
+  (set-frame-position (selected-frame) 0 0)
+  (set-frame-size (selected-frame) 100 1000))
+
+(defun osx-maximize-frame ()
   (interactive)
   (set-frame-position (selected-frame) 0 0)
   (set-frame-size (selected-frame) 1000 1000))
@@ -25,5 +30,5 @@
 
 (global-set-key (kbd "s-w") 'delete-window-or-frame)
 (global-set-key (kbd "s-?") 'help)
-(global-set-key (kbd "<s-S-return>") 'maximize-frame)
-
+(global-set-key (kbd "<s-S-return>") 'osx-maximize-frame)
+(global-set-key (kbd "<C-s-268632090>") 'osx-zoom-frame)
