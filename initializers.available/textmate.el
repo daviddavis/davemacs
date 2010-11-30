@@ -177,24 +177,6 @@
             "\\($\\|\\.[^/]+$\\)")))
 
 
-(defun textmate-plus-quick-find-file ()
-  (interactive)
-  (save-excursion
-    (let* ((root (textmate-project-root))
-           (filename (replace-regexp-in-string "^/*\\.*[/:]" "" (thing-at-point 'filename)))
-           (regex (textmate-plus-partial-matching-regex filename))
-           (choices (remove-if-not (lambda (item) (string-match regex item)) (textmate-cached-project-files root)))
-           (selected-file (cond ((= 1 (length choices)) (car choices))
-                                ((= 0 (length choices)) (message (format "no results for '%s'" filename)) nil)
-                                (t (textmate-completing-read "Find file: " choices)))))
-      (and selected-file (find-file
-                          (concat
-                           (expand-file-name root) "/"
-                           selected-file))))))
-
-(global-set-key (kbd "C-s-t") 'textmate-plus-quick-find-file)
-(global-set-key (kbd "<C-s-268632084>") 'textmate-plus-quick-find-file)
-
 (global-set-key (kbd "M-s-†") 'textmate-clear-cache)
 
 (defun kill-beginning-of-line ()
