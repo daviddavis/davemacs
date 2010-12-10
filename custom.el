@@ -14,6 +14,7 @@
  '(erc-autojoin-mode t)
  '(erc-modules (quote (autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
  '(exec-path (quote ("/Users/timcharper/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/bin" "/usr/X11/bin" "/usr/local/git/bin" "/Applications/Emacs.app/Contents/MacOS/bin" "/usr/local/texlive/2009/bin/universal-darwin/" "/opt/local/bin")))
+ '(ffap-machine-p-known (quote reject)) ; so ido-use-filename-at-point doesn't try to ping strange domains
  '(global-auto-revert-mode t)
  '(gnuserv-program (concat exec-directory "/gnuserv"))
  '(hl-paren-background-colors nil)
