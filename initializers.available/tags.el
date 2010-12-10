@@ -38,19 +38,17 @@
 
 ;;; -- My commands
 
-(setq path-to-ctags "/opt/local/bin/ctags")
+(defcustom path-to-ctags
+  "/usr/local/bin/ctags"
+  "The path to your ctags instance")
+
 (setq path-to-rscript "/Library/Frameworks/R.framework/Resources/bin/Rscript")
-;; (defun create-rtags ()
-;;   "Create R tags by running rtags through the current R process"
-;;   (interactive)
-;;   (ess-command "rtags('.', recursive=TRUE, ofile='TAGS')\n")
-;;   )
 
 (defun create-rtags (dir-name)
   "Create tags file for R."
   (interactive "DDirectory: ")
   (shell-command
-   (format "%s -f %s/TAGS -e -R %s" path-to-ctags dir-name dir-name))
+   (format "%s -f %s/TAGS -e -R %S" path-to-ctags dir-name dir-name))
   (shell-command
    (format "%s -e \"rtags('%s', recursive=TRUE, append=TRUE, ofile='%s/TAGS')\"" path-to-rscript dir-name dir-name))
   )
@@ -58,9 +56,11 @@
 (defun create-tags (dir-name)
   "Create tags file."
   (interactive "DDirectory: ")
-  (shell-command
-   (format "%s -f %s/TAGS -e -R %s" path-to-ctags dir-name dir-name))
-)
+  (let ((old-dir default-directory))
+
+    (cd dir-name)
+    (shell-command
+     (format "%s -f TAGS -e -R ." path-to-ctags))))
 
 (defun find-tags-file ()
   "recursively searches each parent directory for a file named `tags' and returns the

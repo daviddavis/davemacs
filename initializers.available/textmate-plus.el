@@ -5,8 +5,7 @@
 (defun find-non-escaped-paren (kind direction)
   (cond ((= direction -1) (re-search-backward kind))
         ((= direction 1) (search-forward kind) (backward-char))
-        (else (error "direction must be -1 or 1"))
-        )
+        (else (error "direction must be -1 or 1")))
   (cond ((looking-back "\\\\" 1) (find-non-escaped-paren kind direction))))
 
 (defun select-previous-paren ()
@@ -35,7 +34,7 @@
     (filter-buffer-substring (- p2 1) p2 t)
     (filter-buffer-substring p1 (+ p1 1) t)))
 
-(global-set-key (kbd "C-S-d") 'trim-selection)
+(global-set-key (kbd "<C-M-delete>") 'trim-selection)
 (global-set-key (kbd "s-(") 'select-previous-paren)
 (global-set-key (kbd "s-)") 'select-next-paren)
 (global-set-key (kbd "C-s-0") 'select-outer-paren)
@@ -83,6 +82,36 @@
            (project (ido-completing-read "Project: " projects)))
       (textmate-plus-list-project-buffers project))))
 
+(defun textmate-ibuffer-current-project (&optional project-root)
+  "Shows ibuffer filtered to current project"
+  (interactive)
+
+  (let ((project-root (or project-root (textmate-project-root))))
+    (ibuffer nil (format "ibuffer listing for %S" project-root))
+    (ibuffer-filter-by-filename project-root)
+    (setq *textmate-project-root* project-root)))
+
 (global-set-key (kbd "<C-s-268632066>") 'textmate-plus-list-project-buffers)
 (global-set-key (kbd "<C-s-268632080>") 'textmate-plus-switch-to-project)
+(global-set-key (kbd "C-x <C-s-268632066>") 'textmate-ibuffer-current-project)
 
+(defun textmate-plus-quick-find-file ()
+  (interactive)
+  (save-excursion
+    (let* ((root (textmate-project-root))
+           (selection (if (region-active-p)
+                          (buffer-substring (region-beginning) (region-end))
+                        (thing-at-point 'filename)))
+           (filename (replace-regexp-in-string "^/*\\.*[/:]" "" selection))
+           (regex (textmate-plus-partial-matching-regex filename))
+           (choices (remove-if-not (lambda (item) (string-match regex item)) (textmate-cached-project-files root)))
+           (selected-file (cond ((= 1 (length choices)) (car choices))
+                                ((= 0 (length choices)) (message (format "no results for '%s'" filename)) nil)
+                                (t (textmate-completing-read "Find file: " choices)))))
+      (and selected-file (find-file
+                          (concat
+                           (expand-file-name root) "/"
+                           selected-file))))))
+
+(global-set-key (kbd "C-s-t") 'textmate-plus-quick-find-file)
+(global-set-key (kbd "<C-s-268632084>") 'textmate-plus-quick-find-file)
