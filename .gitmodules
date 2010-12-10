@@ -37,3 +37,6 @@
 [submodule "vendor/github"]
 	path = vendor/github
 	url = git://github.com/leadtune/github.el.git
+[submodule "vendor/js2-mode"]
+	path = vendor/js2-mode
+	url = https://github.com/mooz/js2-mode.git

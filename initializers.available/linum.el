@@ -12,6 +12,7 @@
         ruby-mode
         html-mode
         yaml-mode
+        js2-mode
         espresso-mode
         feature-mode))
 (dolist (mode linum-modes)
