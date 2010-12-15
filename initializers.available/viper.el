@@ -32,13 +32,18 @@
 
 (global-set-key (kbd "s-j") 'viper-intercept-ESC-key) ;; escape is hard to reach... this is easy!
 
+;; This ensures that Emacs will only undo up to the last insert/modal state change.
+(add-hook 'viper-insert-state-hook 'undo-boundary t)
+(add-hook 'viper-emacs-state-hook 'undo-boundary t)
+(add-hook 'viper-vi-state-hook 'undo-boundary t)
+
+
 ;; Cursor magic ------------
 ;;   This should be default, or there should be a better way to change this... for now, this code
 ;;   handles changing the cursor from a square to a line
 (add-hook 'viper-insert-state-hook 'viper-set-cursor t)
 (add-hook 'viper-emacs-state-hook 'viper-set-cursor t)
 (add-hook 'viper-vi-state-hook 'viper-set-cursor t)
-
 (defun viper-set-cursor ()
   "Set the cursor for a given state"
   (cond
