@@ -34,7 +34,7 @@
     (filter-buffer-substring (- p2 1) p2 t)
     (filter-buffer-substring p1 (+ p1 1) t)))
 
-(global-set-key (kbd "<C-M-delete>") 'trim-selection)
+(global-set-key (kbd "<C-s-backspace>") 'trim-selection)
 (global-set-key (kbd "s-(") 'select-previous-paren)
 (global-set-key (kbd "s-)") 'select-next-paren)
 (global-set-key (kbd "C-s-0") 'select-outer-paren)
