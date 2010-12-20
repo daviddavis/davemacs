@@ -1,0 +1,1 @@
+../vendor/color-theme-cobalt/color-theme-cobalt.el
