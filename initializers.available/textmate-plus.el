@@ -130,5 +130,24 @@
                            (expand-file-name root) "/"
                            selected-file))))))
 
+(defun swap-around-regex (regex)
+  (interactive (list (read-string "Swap around text: ")))
+  (when (region-active-p)
+    (let* ((selection (filter-buffer-substring (region-beginning) (region-end) t))
+          p1
+          p2
+          (new-string
+           (with-temp-buffer
+             (insert selection)
+             (goto-char (point-min))
+             (search-forward-regexp regex)
+             (setq p2 (point))
+             (search-backward-regexp regex)
+             (setq p1 (point))
+             (format "%s%s%s"
+                     (filter-buffer-substring p2 (point-max))
+                     (filter-buffer-substring p1 p2)
+                     (filter-buffer-substring (point-min) p1)))))
+      (insert new-string))))
 (global-set-key (kbd "C-s-t") 'textmate-plus-quick-find-file)
 (global-set-key (kbd "<C-s-268632084>") 'textmate-plus-quick-find-file)
