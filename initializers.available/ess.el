@@ -9,3 +9,4 @@
 ;; https://stat.ethz.ch/pipermail/ess-help/2009-February/005158.html
 (setq ess-eval-visibly-p nil)
 
+(define-key ess-mode-map "_" nil)
