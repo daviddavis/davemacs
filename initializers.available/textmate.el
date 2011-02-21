@@ -179,6 +179,7 @@
 
 
 (global-set-key (kbd "M-s-†") 'textmate-clear-cache)
+(global-set-key (kbd "M-s-þ") 'textmate-clear-cache)
 
 (defun kill-beginning-of-line ()
   (interactive)
