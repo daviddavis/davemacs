@@ -43,3 +43,6 @@
 [submodule "vendor/color-theme-cobalt"]
 	path = vendor/color-theme-cobalt
 	url = https://github.com/nickewing/color-theme-cobalt.git
+[submodule "vendor/ess"]
+	path = vendor/ess
+	url = https://github.com/emacsmirror/ess.git
