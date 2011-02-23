@@ -46,3 +46,6 @@
 [submodule "vendor/ess"]
 	path = vendor/ess
 	url = https://github.com/emacsmirror/ess.git
+[submodule "vendor/durendal"]
+	path = vendor/durendal
+	url = https://github.com/technomancy/durendal.git
