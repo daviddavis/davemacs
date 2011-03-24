@@ -49,3 +49,6 @@
 [submodule "vendor/durendal"]
 	path = vendor/durendal
 	url = https://github.com/technomancy/durendal.git
+[submodule "vendor/auto-complete"]
+	path = vendor/auto-complete
+	url = git://github.com/timcharper/auto-complete.git
