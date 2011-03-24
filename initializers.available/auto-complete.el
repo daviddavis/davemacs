@@ -13,8 +13,6 @@
 
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/vendor/auto-complete/dict")
 
-(require 'ac-R)
-
 (defun auto-complete-or-show-menu ()
   (interactive)
   "Try to autocomplete. If only one possibility, show the menu so we can at least see the help for the method if available"
