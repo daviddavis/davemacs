@@ -24,7 +24,7 @@
 	url = git://github.com/yoshiki/yaml-mode.git
 [submodule "vendor/rails-minor-mode"]
 	path = vendor/rails-minor-mode
-	url = git://github.com/remvee/emacs-rails.git
+	url = git://github.com/timcharper/emacs-rails.git
 [submodule "vendor/rhtml-minor-mode"]
 	path = vendor/rhtml-minor-mode
 	url = git://github.com/eschulte/rhtml.git
